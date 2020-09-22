@@ -1,10 +1,10 @@
 
 import React from "react";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
-import LoginForm, { Props } from "../LoginForm";
+import App from "../App";
 
-describe("<LoginForm />", () => {
-  test("should display a blank login form, with remember me checked by default", async () => {
-    // ???
+describe("App simple test", () => {
+  test("simple test", async () => {
+    const wrapper = render(<App/>);
   });
 });
