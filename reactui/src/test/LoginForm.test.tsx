@@ -1,6 +1,6 @@
 
 import React from "react";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render} from "@testing-library/react";
 import App from "../App";
 
 describe("App simple test", () => {
