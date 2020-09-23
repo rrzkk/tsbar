@@ -1,0 +1,45 @@
+how to build nodejs using typescript
+https://developer.okta.com/blog/2018/11/15/node-express-typescript#build-a-better-user-interface-with-materialize-and-ejs
+
+how to build root structure(part3)
+https://www.codementor.io/@kakarganpat/how-to-setup-react-and-node-js-in-a-project-koxwqbssl
+
+how to implement test using jest 
+https://basarat.gitbook.io/typescript/intro-1/jest
+
+express test implement
+https://wanago.io/2019/02/04/typescript-express-testing/
+
+how to test nodejs api using jest and supertest
+https://willi.am/blog/2014/07/28/test-your-api-with-supertest/
+
+note: to implement test in front end, the react has its built-in module,
+which has jest and enzyme configurations included, we do not need to set up
+jest and enzyme from start, we should:
+
+$ npm install --save-dev enzyme enzyme-adapter-react-16 react-test-renderer
+$ npm install --save-dev @types/enzyme @types/enzyme-adapter-react-16 @types/react-test-renderer
+
+we may also need @types/react and @types/reactdom if not imported
+
+
+HOW to use git brunch:
+https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
+
+git checkout -b newbrunch
+
+working and commit(on newbrunch) and switch back:
+git checkout master  
+git merge brunch
+
+
+
+
+
+
+
+
+
+
+
+
