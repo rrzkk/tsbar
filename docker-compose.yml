@@ -5,9 +5,7 @@ services:
         build: ./barserver
         expose: 
             - 8080
-        environment: 
-            API_HOST: "http://localhost:3000/"
-            APP_SERVER_PORT: 8080
+     
         ports: 
             - 8080:8080
         volumes: 
@@ -16,12 +14,12 @@ services:
 
     client:
         build: ./reactui
-        environment: 
-            - REACT_APP_PORT=3000
+        
         expose: 
             - 3000
         ports:
             - 3000:3000
+        stdin_open: true
         volumes: 
             - ./reactui/src:/barproject/reactui/src
             - ./reactui/public:/barproject/reactui/public

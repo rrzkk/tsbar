@@ -4,9 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const path_1 = __importDefault(require("path"));
 const app = express_1.default();
 const port = 8080; // default port to listen
 // define a route handler for the default home page
+app.use(express_1.default.static(path_1.default.resolve(__dirname, '../../reactui/build')));
 app.get("/", (req, res) => {
     res.send("Hello world!");
 });

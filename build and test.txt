@@ -17,7 +17,7 @@ note: to implement test in front end, the react has its built-in module,
 which has jest and enzyme configurations included, we do not need to set up
 jest and enzyme from start, we should:
 
-$ npm install --save-dev enzyme enzyme-adapter-react-16 react-test-renderer
+$ npm install --save-dev enzyme enzyme-zhekuadapter-react-16 react-test-renderer
 $ npm install --save-dev @types/enzyme @types/enzyme-adapter-react-16 @types/react-test-renderer
 
 we may also need @types/react and @types/reactdom if not imported
