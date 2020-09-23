@@ -4,7 +4,7 @@ import path from 'path';
 const port = 8080; // default port to listen
 
 // define a route handler for the default home page
-//app.use(express.static(path.resolve(__dirname, '../../reactui/build')));
+// app.use(express.static(path.resolve(__dirname, '../../reactui/build')));
 
 app.get( "/", ( req, res ) => {
     res.send( "Hello world!" );

@@ -16,13 +16,13 @@ services:
         build: ./reactui
         
         expose: 
-            - 3000
+            - 3001
         ports:
-            - 3000:3000
-        stdin_open: true
+            - 3001:3001
+       ## stdin_open: true
         volumes: 
             - ./reactui/src:/barproject/reactui/src
-            - ./reactui/public:/barproject/reactui/public
+       ##     - ./reactui/public:/barproject/reactui/public
         links: 
             - server
-        command: npm run start
+        command: npm run expressstart

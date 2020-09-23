@@ -2,6 +2,7 @@
   "name": "reactui",
   "version": "0.1.0",
   "private": true,
+  "main": "src/express.js",
   "proxy": "http://localhost:8080/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -14,14 +15,14 @@
     "enzyme-adapter-react-16": "^1.15.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
-    "typescript": "^4.0.3"
+    "react-scripts": "3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "expressstart": "npm run build && node ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,6 +43,7 @@
     "@types/enzyme": "^3.10.6",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/react": "^16.9.49",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "typescript": "^4.0.3"
   }
 }
