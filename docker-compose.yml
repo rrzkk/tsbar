@@ -2,9 +2,9 @@ version: '3'
 
 services: 
     server:
+        container_name: barserver
         build: ./barserver
-        expose: 
-            - 8080
+      
      
         ports: 
             - 8080:8080
@@ -12,17 +12,31 @@ services:
             - ./barserver/src:/barproject/server/src
         command: npm run start
 
-    client:
-        build: ./reactui
+    #client:
+       # build: ./reactui
         
-        expose: 
-            - 3001
-        ports:
-            - 3001:3001
-       ## stdin_open: true
-        volumes: 
-            - ./reactui/src:/barproject/reactui/src
+        #expose: 
+        #    - 80
+       # ports:
+        #    - 80:80
+        #stdin_open: true
+      #  volumes: 
+        #    - ./reactui/src:/usr/share/nginx/html
        ##     - ./reactui/public:/barproject/reactui/public
-        links: 
-            - server
-        command: npm run expressstart
+       # links: 
+        #    - server
+        #command: npm run expressstart
+        #command: npm run start
+    reactui:
+            container_name: reactui
+            build:
+              context: ./reactui
+              
+            volumes:
+              - './reactui:/barproject/reactui'
+         
+            ports:
+              - '80:80'
+            environment:
+              - NODE_ENV=development
+   

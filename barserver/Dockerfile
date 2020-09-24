@@ -1,3 +1,4 @@
+#FROM nginx
 FROM node:14.8.0-alpine
 
 RUN mkdir -p /barproject/server

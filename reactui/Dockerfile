@@ -1,6 +1,6 @@
 
 FROM node:14.8.0-alpine AS build
-#FROM nginx
+
 
 RUN mkdir -p /barproject/reactui
 WORKDIR /barproject/reactui
@@ -18,7 +18,7 @@ RUN npm run build
 #CMD ["npm","run","start"]
 
 FROM nginx:stable-alpine
-COPY --from=build /barproject/reactui/build /user/share/nginx/html
+COPY --from=build /barproject/reactui/build /usr/share/nginx/html
 
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
