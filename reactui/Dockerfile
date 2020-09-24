@@ -1,4 +1,6 @@
-FROM node:14.8.0-alpine
+
+FROM node:14.8.0-alpine AS build
+#FROM nginx
 
 RUN mkdir -p /barproject/reactui
 WORKDIR /barproject/reactui
@@ -11,4 +13,13 @@ RUN npm install --silent
 
 COPY . ./
 
-CMD ["npm","run","expressstart"]
+RUN npm run build
+#CMD ["npm","run","expressstart"]
+#CMD ["npm","run","start"]
+
+FROM nginx:stable-alpine
+COPY --from=build /barproject/reactui/build /user/share/nginx/html
+
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx","-g","daemon off;"]
