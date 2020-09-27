@@ -1,25 +1,8 @@
 import React from 'react';
-//import { shallow } from 'enzyme';
 import { act, cleanup, fireEvent, getByText, render, waitForElement } from '@testing-library/react';
 import Mainpage from '../components/Mainpage';
-import axios from 'axios';
-import mockAxios from "axios";
+import services from '../api/server';
 
-jest.mock('axios');
-
-
-/*it('renders welcome message', () => {
-  const wrapper = shallow(<App />);
-  const welcome = <a>Learn React!</a>;
-  // expect(wrapper.contains(welcome)).toBe(true);
-  expect(wrapper.contains(welcome)).toEqual(true);
-});
-
-it('renders welcome message', () => {
-  const { getByText } = render(<App />);
-  expect(getByText('Learn React')).toBeInTheDocument();
-});
-*/
 it('test post method', () => {
   const { getByText, getByLabelText } = render(<Mainpage />);
 
@@ -39,36 +22,52 @@ it('test post method', () => {
 
 it('test post method', () => {
   const { getByText, getByLabelText } = render(<Mainpage />);
-  const button = getByText('Submit Secret');
 
   (getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
   expect((getByLabelText('Your Secret') as HTMLInputElement).value).toEqual('test')
 
 
-}
-);
+});
+
+it('textbox receives text', () => {
+  // arrange
+  const { getByLabelText } = render(<Mainpage />);
+  (getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
+
+  // act
+  const text = (getByLabelText('Your Secret') as HTMLInputElement).value;
+
+  // assert
+  expect(text).toEqual('test');
+
+});
 
 describe('test', () => {
   afterEach(cleanup);
  
   it('test post method', async () => {
+    // arrange
+    const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
+    const button = getByText('Submit Secret');
+    
+    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(_ => {
+      return {
+        status: 200,
+        statusText: 'Ok',
+        data: {
+          id: "guid"
+        }
+      };
+    });
+    
+    // act
+    await act(async () => {
+      (getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
+      fireEvent.click(button);
+    });
 
-    var button: Node | Window;
-    var text;
-
-    const { getByText, getByLabelText } = render(<Mainpage />);
-    button = getByText('Submit Secret');
-
-    (getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
-    text=(getByLabelText('Your Secret') as HTMLInputElement).value;
-
-    expect(text).toEqual('test');
-    act(() => { fireEvent.click(button); });
-
-    expect(axios).toHaveBeenCalledTimes(1);
-    //axios.post.mockImplementationOnce()
-
-
-  }
-  );
+    // assert
+    expect(postSecret).toHaveBeenCalledTimes(1);
+    expect(getByTestId('res')).toHaveTextContent('{"id":"guid"}');
+  });
 });
