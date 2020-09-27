@@ -1,8 +1,12 @@
 import React from 'react';
 //import { shallow } from 'enzyme';
-import { act, fireEvent, getByText, render, waitForElement } from '@testing-library/react';
+import { act, cleanup, fireEvent, getByText, render, waitForElement } from '@testing-library/react';
 import Mainpage from '../components/Mainpage';
-import fetchMock from 'fetch-mock';
+import axios from 'axios';
+import mockAxios from "axios";
+
+jest.mock('axios');
+
 
 /*it('renders welcome message', () => {
   const wrapper = shallow(<App />);
@@ -16,8 +20,6 @@ it('renders welcome message', () => {
   expect(getByText('Learn React')).toBeInTheDocument();
 });
 */
-
-
 it('test post method', () => {
   const { getByText, getByLabelText } = render(<Mainpage />);
 
@@ -47,37 +49,25 @@ it('test post method', () => {
 );
 
 describe('test', () => {
-
-  afterEach(()=>{
-    fetchMock.restore();
-    fetchMock.reset();
-  });
+  afterEach(cleanup);
+ 
   it('test post method', async () => {
 
-    fetchMock.mock("/api/postsecret",{
-      status:200,
-      body:{
-        success: true
-      }
-    });
-
+    var button: Node | Window;
+    var text;
 
     const { getByText, getByLabelText } = render(<Mainpage />);
-    const button = getByText('Submit Secret');
-
-    //react-test
-    //key-in on Key up   On key down 
-
-    //jest spy on
-    //jest.fn
-    //https://codewithhugo.com/jest-fn-spyon-stub-mock/
+    button = getByText('Submit Secret');
 
     (getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
-    expect((getByLabelText('Your Secret') as HTMLInputElement).value).toEqual('test');
+    text=(getByLabelText('Your Secret') as HTMLInputElement).value;
 
+    expect(text).toEqual('test');
     act(() => { fireEvent.click(button); });
-    expect(fetchMock).toHaveProperty("post");
-    
+
+    expect(axios).toHaveBeenCalledTimes(1);
+    //axios.post.mockImplementationOnce()
+
 
   }
   );
