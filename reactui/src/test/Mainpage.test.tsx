@@ -1,7 +1,9 @@
 import React from 'react';
 import { act, cleanup, fireEvent, getByText, render, waitForElement } from '@testing-library/react';
 import Mainpage from '../components/Mainpage';
-import services from '../api/server';
+import service from '../api/server';
+import { AxiosResponse } from 'axios';
+
 
 it('test post method', () => {
   const { getByText, getByLabelText } = render(<Mainpage />);
@@ -49,20 +51,24 @@ describe('test', () => {
     // arrange
     const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
     const button = getByText('Submit Secret');
-    
-    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(_ => {
-      return {
+   
+    const postSecret = jest.spyOn(service, 'postSecret').mockImplementation(async ()=>{
+      return Promise.resolve({
+        headers:'Connection',
+        config:{},
         status: 200,
         statusText: 'Ok',
         data: {
           id: "guid"
         }
-      };
+      });
     });
+
     
     // act
     await act(async () => {
-      (getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
+      fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
+      //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
       fireEvent.click(button);
     });
 

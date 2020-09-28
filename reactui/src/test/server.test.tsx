@@ -1,15 +1,15 @@
 import axios, { AxiosResponse } from 'axios';
 import services from '../api/server';
 
-it('PostSecret should call axios', () => {
+it('PostSecret should call axios', async() => {
     // arrange
     const secret = 'secret';
-    const apiRequest = jest.spyOn(axios, 'request').mockImplementation(_ => {
-        return { data: { id: 'guid'}};
+    const apiRequest = jest.spyOn(axios, 'request').mockImplementation(async _ => {
+        return Promise.resolve({ data: { id: 'guid'}});
     });
 
     // act
-    const result = services.postSecret(secret);
+    const result =await services.postSecret(secret);
 
     // assert
     expect(apiRequest).toHaveBeenCalledTimes(1);
