@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, cleanup, fireEvent, getByText, render, waitForElement } from '@testing-library/react';
 import Mainpage from '../components/Mainpage';
-import service from '../api/server';
+import services from '../api/server';
 import { AxiosResponse } from 'axios';
 
 
@@ -52,7 +52,7 @@ describe('test', () => {
     const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
     const button = getByText('Submit Secret');
    
-    const postSecret = jest.spyOn(service, 'postSecret').mockImplementation(async ()=>{
+    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
       return Promise.resolve({
         headers:'Connection',
         config:{},
