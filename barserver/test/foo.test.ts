@@ -1,30 +1,40 @@
-
-import express from "express";
-import { isMainThread } from "worker_threads";
-import axios, { AxiosResponse} from 'axios';
+import request from "supertest";
+import app from '../src/';
 
 
-
-const app=express();
-var request = require('supertest')('http://localhost:8080');
+// const request = require('supertest')('http://localhost:8080');
 
 
 it('should get hello', async () => {
-    const res = await request.get('/');
-    expect("Hello, World!")
-});
-
-
-it('should test that true === true', () => {
-      expect(true).toBe(true)
+    const res = await request(app.app).get('/');
+    expect(res.text).toBe('Hello world!');
 });
 
 it('should return',async ()=>{
-    const res= await request
+    const res= await request(app.app)
     .post('/api/postsecret')
-    .send({ data: JSON.stringify("secrettest") })
-    .set('Accept','application/json')
-   
-    expect(res).toBe("secrettest");
+    .send({ data: "secrettest" })
+    .set('Accept','application/json');
+
+   expect(res.text).toBe("secrettest")
 });
+
+it('should return guid', async ()=>{
+    const res =await request(app.app)
+    .post('/api/trasfertoguid')
+    .send({data:"secrettext"})
+    .set('Accept','application/json');
+
+    expect(res.text.length).toBe(36);
+})
+it('should return guid', async ()=>{
+    const res =await request(app.app)
+    .post('/api/trasfersecret')
+    .send({data:"secrettext"})
+    .set('Accept','application/json');
+
+    expect(res.body.guid.length).toBe(36);
+    expect(res.body.secret).toBe("secrettext");
+})
+
 
