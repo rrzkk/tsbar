@@ -10,6 +10,11 @@ app.get( "/", ( req, res ) => {
     res.send( "Hello world!" );
 } );
 
+app.post("/api/postsecret",(req,res)=>{
+    const secret=req.body.data;
+    res.send("secret");
+})
+
 // start the Express server
 app.listen( port, () => {
    // console.log( `server started at http://localhost:${ port }` );
