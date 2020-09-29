@@ -40,7 +40,7 @@ app.post("/api/trasfersecret",(req,res)=>{
         guid:guidnum
     });
 })
-
+//this method is used to post secret and store guid
 app.post("/api/trasfersecret2",async (req,res)=>{
     const secret=req.body.data;
     const guidnum=guid.create_UUID();
@@ -55,10 +55,11 @@ app.post("/api/trasfersecret2",async (req,res)=>{
     const jsonfile=await jsonop.jsonreadall();
     jsonop.jsonwrite(jsonfile, jsonpair)
 })  
-
-app.get("/api/getsecret", (req,res)=>{
+//this method is used to get secret by guid
+app.get("/api/getsecret", async (req,res)=>{
     const guid=req.query.guid.toString();
-    res.send(jsonop.jsonread(guid));
+    const result= await jsonop.jsonread(guid);
+    res.send(result);
 })
 
 

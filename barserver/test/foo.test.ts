@@ -2,6 +2,7 @@ import request from "supertest";
 import app from '../src/';
 
 
+
 // const request = require('supertest')('http://localhost:8080');
 
 
@@ -48,7 +49,7 @@ it('should store secret',async()=>{
     const res2 = await request(app.app)
     .get(`/api/getsecret?guid=${res.body.guid}`);
 
-    expect(res2).toBe(res.body.secret);
+    expect(res2.text).toBe(res.body.secret);
 })
 
 
