@@ -9,7 +9,7 @@ it('should get hello', async () => {
     const res = await request(app.app).get('/');
     expect(res.text).toBe('Hello world!');
 });
-
+//Can be delete later
 it('should return',async ()=>{
     const res= await request(app.app)
     .post('/api/postsecret')
@@ -18,7 +18,7 @@ it('should return',async ()=>{
 
    expect(res.text).toBe("secrettest")
 });
-
+//Can be delete later
 it('should return guid', async ()=>{
     const res =await request(app.app)
     .post('/api/trasfertoguid')
@@ -35,6 +35,20 @@ it('should return guid', async ()=>{
 
     expect(res.body.guid.length).toBe(36);
     expect(res.body.secret).toBe("secrettext");
+})
+
+it('should store secret',async()=>{
+    const res = await request(app.app)
+    .post('/api/trasfersecret2')
+    .send({data:"secrettext"})
+    .set('Accept','application/json');
+
+    expect(res.body.secret).toBe("secrettext");
+
+    const res2 = await request(app.app)
+    .get(`/api/getsecret?guid=${res.body.guid}`);
+
+    expect(res2.text).toBe(res.body.secret);
 })
 
 
