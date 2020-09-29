@@ -9,10 +9,14 @@ const port = 8080; // default port to listen
 // app.use(express.static(path.resolve(__dirname, '../../reactui/build')));
 
 app.get( "/", ( req, res ) => {
-    res.send( "Hello world!" );
-} );
+    res.send({ 'content': "Hello world!" });
+});
 
-app.post("/api/postsecret", (req, res) => {
+app.get('/test/', (req, res) => {
+    res.send('This is res from /api/test');
+})
+
+app.post("/api/postsecret/", (req, res) => {
     res.send(req.body);
 });
 

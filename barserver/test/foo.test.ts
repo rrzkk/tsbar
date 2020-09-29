@@ -3,7 +3,7 @@ import request from 'supertest';
 
 it('should get hello', async () => {
     const res = await request(app.app).get('/');
-    expect(res.text).toBe("Hello world!")
+    expect(res.text).toBe(JSON.stringify({"content":"Hello world!"}))
 });
 
 it('should return',async () =>{
