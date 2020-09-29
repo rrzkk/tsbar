@@ -1,6 +1,8 @@
 import express from "express";
-import path from 'path';
- const app = express();
+import bodyParser from 'body-parser';
+
+const app = express();
+app.use(bodyParser.json());
 const port = 8080; // default port to listen
 
 // define a route handler for the default home page
@@ -10,12 +12,13 @@ app.get( "/", ( req, res ) => {
     res.send( "Hello world!" );
 } );
 
-app.post("/api/postsecret",(req,res)=>{
-    const secret=req.body.data;
-    res.send("secret");
-})
+app.post("/api/postsecret", (req, res) => {
+    res.send(req.body);
+});
 
 // start the Express server
-app.listen( port, () => {
+const server = app.listen( port, () => {
    // console.log( `server started at http://localhost:${ port }` );
-} );
+});
+
+export default { app, server };
