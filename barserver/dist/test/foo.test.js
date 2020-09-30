@@ -17,13 +17,36 @@ const src_1 = __importDefault(require("../src/"));
 // const request = require('supertest')('http://localhost:8080');
 it('should get hello', () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield supertest_1.default(src_1.default.app).get('/');
-    expect(res.text).toBe('Hello world!23445');
+    expect(res.text).toBe('Hello world!');
 }));
-it('should return', () => __awaiter(void 0, void 0, void 0, function* () {
+it('should store secret', () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield supertest_1.default(src_1.default.app)
-        .post('/api/postsecret')
-        .send({ data: "secrettest" })
+        .post('/api/trasfersecret2')
+        .send({ data: "secrettext" })
         .set('Accept', 'application/json');
-    expect(res.body.data).toBe("secrettest");
+    expect(res.text.length).toBe(36);
+    const res2 = yield supertest_1.default(src_1.default.app)
+        .get(`/api/getsecret?guid=${res.text}`);
+    expect(res2.text).toBe("secrettext");
+    const res3 = yield supertest_1.default(src_1.default.app)
+        .get(`/api/getsecret?guid=${res.text}`);
+    expect(res3.text).toBe('{}');
 }));
+/*
+it('should burn after read',async ()=>{
+    const res = await request(app.app)
+    .post('/api/trasfersecret2')
+    .send({data:"burnmsg"})
+    .set('Accept','application/json');
+
+    const res2 = await request(app.app)
+    .get(`/api/getsecret?guid=${res.body.guid}`);
+
+    expect(res2.text).toBe(res.body.secret);
+
+    const res3 = await request(app.app)
+    .get(`/api/getsecret?guid=${res.body.guid}`);
+
+    expect(res3.text).toBe('{}');
+})*/
 //# sourceMappingURL=foo.test.js.map

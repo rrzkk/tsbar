@@ -16,7 +16,7 @@ function Mainpage() {
         try {
             const response = await services.postSecret(secret);
             if (response.status==200) {
-                setRes(JSON.stringify(response.data))
+                setRes('http://localhost:8080/api/getsecret?guid='+response.data)
                 return response;
             } else {
                 var error = new Error('Error ' + response.status + ': ' + response.statusText);

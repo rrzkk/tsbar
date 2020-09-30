@@ -28,15 +28,15 @@ services:
         #command: npm run expressstart
         #command: npm run start
     reactui:
-            container_name: reactui
-            build:
-              context: ./reactui
+          container_name: reactui
+          build:
+          context: ./reactui
               
-            volumes:
+          volumes:
               - './reactui:/barproject/reactui'
          
-            ports:
+          ports:
               - '80:80'
-            environment:
+          environment:
               - NODE_ENV=development
    

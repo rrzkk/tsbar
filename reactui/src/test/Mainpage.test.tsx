@@ -43,7 +43,7 @@ it('textbox receives text', () => {
   expect(text).toEqual('test');
 
 });
-
+/*
 describe('test', () => {
   afterEach(cleanup);
  
@@ -75,5 +75,36 @@ describe('test', () => {
     // assert
     expect(postSecret).toHaveBeenCalledTimes(1);
     expect(getByTestId('res')).toHaveTextContent('{"id":"guid"}');
+  });
+});*/
+
+describe('should get secret', () => {
+  afterEach(cleanup);
+ 
+  it('should get url', async () => {
+    // arrange
+    const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
+    const button = getByText('Submit Secret');
+    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
+      return Promise.resolve({
+        headers:'Connection',
+        config:{},
+        status: 200,
+        statusText: 'Ok',
+        data:'guid'
+      });
+    });
+
+    
+    // act
+    await act(async () => {
+      fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
+      //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
+      fireEvent.click(button);
+    });
+
+    // assert
+    expect(postSecret).toHaveBeenCalledTimes(1);
+    expect(getByTestId('res')).toHaveTextContent('http://localhost:8080/api/getsecret?guid=guid');
   });
 });

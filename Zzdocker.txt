@@ -1,0 +1,27 @@
+https://medium.com/@xiaolishen/develop-in-docker-a-node-backend-and-a-react-front-end-talking-to-each-other-5c522156f634
+
+docker build -t name .
+docker run -it -p 3000:3000 --rm testui
+docker-compose up --build
+
+docker images
+docker ps
+
+To server front end using express js:
+just need to install express, write app.use(path), add main and script into package.json
+
+How to server with nginx
+https://mherman.org/blog/dockerizing-a-react-app/
+https://dev.to/subhransu/nevertheless-subhransu-maharana-coded-5eam
+notice: use usr rather than user
+
+
+create .sh   
+git bash   wsl
+docker postgresql
+
+put secret in s3
+aws cli download secret 
+secret folder ignore
+
+

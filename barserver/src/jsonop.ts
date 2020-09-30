@@ -1,4 +1,5 @@
-import fs from 'fs'
+import fs from 'fs';
+import path from 'path';
 
 
 interface singleJson {
@@ -7,29 +8,42 @@ interface singleJson {
 }
 
 export default{
-    //concat file1 and file2
-    async jsonwrite(file1:singleJson[],file2:singleJson){
+    // concat file1 and file2
+    jsonwrite(file1:singleJson[],file2:singleJson){
         const file3=JSON.stringify(  file1.concat(file2));
-        fs.writeFile(__dirname +'/guiddata.json', file3,err=>{});
+       console.log("write");
+        fs.writeFileSync(path.join(__dirname ,'guiddata.json'), file3);
         
+
     },
-    //get the json object with guid===guid
+    // get the json object with guid===guid
     async jsonread(guid:string){
-        let rawdata = fs.readFileSync(__dirname +'/guiddata.json').toString();
-        let jsondata = JSON.parse(rawdata);
-        
-    
-       
-        const result= jsondata.filter((el: singleJson)=>el.guid==guid);
-        console.log(result[0].secret);
+        const rawdata = fs.readFileSync(path.join(__dirname ,'guiddata.json')).toString();
+        const jsondata = JSON.parse(rawdata);
+
+
+
+        const result= jsondata.filter((el: singleJson)=>el.guid===guid);
+        if(result.length!==0){
         return result[0].secret.toString();
-      
+        }
+        else return '{}';
     },
-    //get the json array
+    // get the json array
     jsonreadall(){
-        let rawdata = fs.readFileSync(__dirname +'/guiddata.json').toString();
-        
-        let jsondata = JSON.parse(rawdata);
+        const rawdata = fs.readFileSync(path.join(__dirname ,'guiddata.json')).toString();
+
+        const jsondata = JSON.parse(rawdata);
         return jsondata;
+    },
+    // delete json object with guid= guid
+     jsondelete(guid:string){
+        const alljson=this.jsonreadall();
+        
+        const result=alljson.filter((el:singleJson)=>el.guid!==guid);
+        const resultstring= JSON.stringify(result);
+      
+        fs.writeFileSync(path.join(__dirname ,'guiddata.json'),resultstring);
+  
     }
 }
