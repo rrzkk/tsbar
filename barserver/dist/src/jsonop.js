@@ -13,17 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 exports.default = {
     // concat file1 and file2
     jsonwrite(file1, file2) {
         const file3 = JSON.stringify(file1.concat(file2));
         console.log("write");
-        fs_1.default.writeFileSync(require('./guiddata.json'), file3);
+        fs_1.default.writeFileSync(path_1.default.join(__dirname, 'guiddata.json'), file3);
     },
     // get the json object with guid===guid
     jsonread(guid) {
         return __awaiter(this, void 0, void 0, function* () {
-            const rawdata = fs_1.default.readFileSync(require('./guiddata.json')).toString();
+            const rawdata = fs_1.default.readFileSync(path_1.default.join(__dirname, 'guiddata.json')).toString();
             const jsondata = JSON.parse(rawdata);
             const result = jsondata.filter((el) => el.guid === guid);
             if (result.length !== 0) {
@@ -35,7 +36,7 @@ exports.default = {
     },
     // get the json array
     jsonreadall() {
-        const rawdata = fs_1.default.readFileSync(require('./guiddata.json')).toString();
+        const rawdata = fs_1.default.readFileSync(path_1.default.join(__dirname, 'guiddata.json')).toString();
         const jsondata = JSON.parse(rawdata);
         return jsondata;
     },
@@ -44,7 +45,7 @@ exports.default = {
         const alljson = this.jsonreadall();
         const result = alljson.filter((el) => el.guid !== guid);
         const resultstring = JSON.stringify(result);
-        fs_1.default.writeFileSync(require('./guiddata.json'), resultstring);
+        fs_1.default.writeFileSync(path_1.default.join(__dirname, 'guiddata.json'), resultstring);
     }
 };
 //# sourceMappingURL=jsonop.js.map
