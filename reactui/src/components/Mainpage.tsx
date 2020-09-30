@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, FormGroup, Label, Input } from 'reactstrap';
-import { ok } from 'assert';
 import services from '../api/server';
+import { useHistory } from "react-router-dom";
 
 
 function Mainpage() {
     const [secret,setSecret]=useState<string>('');
     const [res,setRes]=useState<string>('');
+    let history = useHistory();
 
     function changeSecret(evt: React.ChangeEvent<HTMLInputElement>){
         setSecret(evt.target.value);
@@ -26,18 +27,21 @@ function Mainpage() {
             console.log('Post secret fail: ', error.message); 
         }
     }
+    function handleClick(){
+        history.push('/secret')
+    }
     return (
         
         <div className='container'>
             <div className='row'>
                 <div className='col-10 offset-1'>
                     <FormGroup>
+       
                         <Label for="secretinput" style={{margin:20}}>Your Secret</Label>
                         <Input type="textarea"  id="secretinput" style={{height:500,margin:20}} value={secret}
                         onChange={(evt)=>{changeSecret(evt)}}/>
-                        <div data-testid="res">
-                            {res}
-                        </div>
+                        
+                        <a onClick={handleClick} data-testid="res" href="">{res}</a>
                         <Button style={{margin:20}} onClick={()=>{postSecret()}}>Submit Secret</Button>
                     </FormGroup>
                 </div>
