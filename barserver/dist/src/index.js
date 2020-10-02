@@ -45,6 +45,7 @@ app.post("/api/trasfersecret2", (req, res) => __awaiter(void 0, void 0, void 0, 
 app.get("/api/getsecret", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const guid = req.query.guid.toString();
     const result = yield jsonop_1.default.jsonread(guid);
+    console.log('123');
     res.send(result);
     jsonop_1.default.jsondelete(guid);
 }));

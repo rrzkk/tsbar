@@ -8,7 +8,9 @@ import { useHistory } from "react-router-dom";
 function Mainpage() {
     const [secret, setSecret] = useState<string>('');
     const [res, setRes] = useState<string>('');
-    const [guid, setGuid] = useState<string>('')
+    const [guid, setGuid] = useState<string>('');
+    const [btnDis,setBtnDis]=useState<boolean>(false);
+
     let history = useHistory();
 
 
@@ -49,7 +51,12 @@ function Mainpage() {
                             {!!guid && <a data-testid="res" href={`http://localhost:3000/secret/${guid}`}>http://localhost:3000/secret/{guid}</a>}
                             </div>
                         
-                        <Button style={{ margin: 20 }} onClick={() => { postSecret() }}>Submit Secret</Button>
+                        <Button style={{ margin: 20 }} 
+                        onClick={() => { postSecret() }}
+                        disabled={secret===''}
+                        >
+                            Submit Secret
+                            </Button>
                     </FormGroup>
                 </div>
             </div>

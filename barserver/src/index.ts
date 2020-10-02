@@ -40,6 +40,8 @@ app.post("/api/trasfersecret2",async (req,res)=>{
 app.get("/api/getsecret", async (req,res)=>{
     const guid=req.query.guid.toString();
     const result= await jsonop.jsonread(guid);
+
+    console.log('123');
     res.send(result);
     jsonop.jsondelete(guid);
 })

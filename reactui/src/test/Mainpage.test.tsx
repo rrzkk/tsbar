@@ -87,40 +87,41 @@ describe('should get secret', () => {
     expect(getByTestId('res')).toHaveTextContent('http://localhost:3000/secret/guid');
   });
 
- it('should redirect',async()=>{
-    const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
-    const button = getByText('Submit Secret');
+//  it('should redirect',async()=>{
+//     const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
+//     const button = getByText('Submit Secret');
    
     
 
-    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
-      return Promise.resolve({
-        headers:'Connection',
-        config:{},
-        status: 200,
-        statusText: 'Ok',
-        data:'guid'
-      });
-    });
+//     const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
+//       return Promise.resolve({
+//         headers:'Connection',
+//         config:{},
+//         status: 200,
+//         statusText: 'Ok',
+//         data:'guid'
+//       });
+//     });
   
     
-    await act(async () => {
-      fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
-      //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
+//     await act(async () => {
+//       fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
+//       //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
       
-      fireEvent.click(button);
+//       fireEvent.click(button);
       
-      const link=getByTestId('res');
-      fireEvent.click(link);
+//       const link=getByTestId('res');
+//       fireEvent.click(link);
 
-    });
+//     });
 
-   expect(mockpush).toBeCalledTimes(1);
-   expect(mockpush).toBeCalledWith('/secret');
+//    expect(mockpush).toBeCalledTimes(1);
+//    expect(mockpush).toBeCalledWith('/secret');
 
-  })
+//   })
 
-});
+ });
+
 
 it("should validate textbox",async ()=>{
   const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
@@ -140,4 +141,12 @@ it("should validate textbox",async ()=>{
   expect(postSecret).toHaveBeenCalledTimes(1);
 
 })
+
+// Timeout
+
+// Interruption
+
+// API cannot persist the material
+
+
 
