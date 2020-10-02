@@ -6,9 +6,17 @@ import services from '../api/server';
 import { useHistory } from "react-router-dom";
 import * as ReactRouterDom from 'react-router-dom';
 
+const mockpush=jest.fn();
+jest.mock('react-router-dom', () => ({
+  
+  ...jest.requireActual('react-router-dom') as any,
+  useHistory: () => ({
+    
+    push:mockpush,
+  })
+}));
 
-
-
+  afterEach(cleanup);
 it('test post method', () => {
   const { getByText, getByLabelText } = render(<Mainpage />);
 
@@ -50,7 +58,7 @@ it('textbox receives text', () => {
 
 
 describe('should get secret', () => {
-  afterEach(cleanup);
+
  
   it('should get url', async () => {
     // arrange
@@ -76,13 +84,14 @@ describe('should get secret', () => {
 
     // assert
     expect(postSecret).toHaveBeenCalledTimes(1);
-    expect(getByTestId('res')).toHaveTextContent('http://localhost:8080/api/getsecret?guid=guid');
+    expect(getByTestId('res')).toHaveTextContent('http://localhost:3000/secret/guid');
   });
 
-  it('should redirect',async()=>{
+ it('should redirect',async()=>{
     const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
     const button = getByText('Submit Secret');
-    const link=getByTestId('res');
+   
+    
 
     const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
       return Promise.resolve({
@@ -93,21 +102,15 @@ describe('should get secret', () => {
         data:'guid'
       });
     });
-    const mockpush=jest.fn();
-    jest.mock('react-router-dom', () => ({
-      
-      ...jest.requireActual('react-router-dom') as typeof ReactRouterDom,
-      useHistory: () => ({
-        
-        push:mockpush,
-      })
-    }));
+  
     
     await act(async () => {
       fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
       //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
       
       fireEvent.click(button);
+      
+      const link=getByTestId('res');
       fireEvent.click(link);
 
     });
@@ -116,6 +119,25 @@ describe('should get secret', () => {
    expect(mockpush).toBeCalledWith('/secret');
 
   })
+
 });
 
-it
+it("should validate textbox",async ()=>{
+  const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
+  const button = getByText('Submit Secret');
+  await act(async () => {
+    fireEvent.click(button);
+  });
+  const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
+    return Promise.resolve({
+      headers:'Connection',
+      config:{},
+      status: 200,
+      statusText: 'Ok',
+      data:'guid'
+    });
+  });
+  expect(postSecret).toHaveBeenCalledTimes(1);
+
+})
+
