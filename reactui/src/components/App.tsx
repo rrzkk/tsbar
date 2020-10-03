@@ -1,5 +1,6 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css';
 
 import {
     BrowserRouter as Router,
@@ -21,7 +22,8 @@ function App() {
 
     }
     return (
-        <Router>
+        <div className="bg">
+        <Router >
             <Switch>
                 <Route exact path="/" component={Mainpage} />
                 <Route path="/secret/:secret" >
@@ -29,6 +31,10 @@ function App() {
                 </Route>
             </Switch>
         </Router>
+        <div className="bottom">
+            <p>@This website is designed to pass secrets</p>
+        </div>
+        </div>
     );
 
 }

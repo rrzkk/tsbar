@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react"
+import React, { useEffect,useState } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import services from '../api/server';
 
@@ -11,32 +11,30 @@ interface Props {
 const Secret: React.FC<Props> = ({ text }) => {
 
     const [secret, setSecret] = useState('loading');
-    const useMountEffect = (fun: any) => useEffect(fun, [])
-    //let secret='loading';
+
+    const useMountEffect = (fun: any) => useEffect(fun, []);
     useMountEffect(() => {
-        console.log('run once')
+
         services.getSecret('http://localhost:8080/api/getsecret?guid=' + text).then(res => {
-            //secret=res.data
             setSecret(res.data);
         });
     });
-
-    console.log("text =", text);
-    // useEffect(()=>{
-    //     console.log('run once')
-    //     services.getSecret('http://localhost:8080/api/getsecret?guid=' + text).then(res=>{
-    //         //secret=res.data
-    //         setSecret(res.data);
-    //     });
-    // },[]);
-
     return (
-        <div className='container'>
+        <div className='container center'>
             <div className='row'>
                 <div className='col-10 offset-1'>
-                    <h1>The secret</h1>
-                    <div>{text}</div>
-                    <div>{secret}</div>
+                    <div className="headertext">
+                        <h3>The secret message</h3>
+                    </div>
+
+                    <div className="maintext">
+                        <div><b>GUID : </b>{text}</div>
+                    </div>
+
+                    <div className="maintext">
+                        <div><b>Secret: </b>{secret}</div>
+                    </div>
+
                 </div>
             </div>
         </div>

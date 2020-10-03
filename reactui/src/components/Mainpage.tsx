@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, FormGroup, Label, Input } from 'reactstrap';
 import services from '../api/server';
-import { useHistory } from "react-router-dom";
+
 
 
 function Mainpage() {
     const [secret, setSecret] = useState<string>('');
-    const [res, setRes] = useState<string>('');
     const [guid, setGuid] = useState<string>('');
-    const [btnDis,setBtnDis]=useState<boolean>(false);
 
-    let history = useHistory();
+
+  
 
 
     function changeSecret(evt: React.ChangeEvent<HTMLInputElement>) {
@@ -21,7 +20,7 @@ function Mainpage() {
         try {
             const response = await services.postSecret(secret);
             if (response.status === 200) {
-                setRes('http://localhost:8080/api/getsecret?guid=' + response.data);
+
                 setGuid(response.data)
                 return response;
             } else {
@@ -33,27 +32,27 @@ function Mainpage() {
         }
     }
 
-//    function handleClick() {
-//             //history.push(`/secret/${guid}`)
-//             history.push(`/secret/${guid}`)
-//     }
+
     return (
-
-        <div className='container'>
+        
+        <div className='container center'>
             <div className='row'>
-                <div className='col-10 offset-1'>
+                <div className='col-8 col-md-10 offset-md-1'>
                     <FormGroup>
-
-                        <Label for="secretinput" style={{ margin: 20 }}>Your Secret</Label>
-                        <Input type="textarea" id="secretinput" style={{ height: 500, margin: 20 }} value={secret}
-                            onChange={(evt) => { changeSecret(evt) }} />
+                        <div className="headertext">
+                            <Label for="secretinput" style={{ margin: 20 }} className="header"><b><h3>Your Secret</h3></b></Label>
+                        </div>
+                        <div className="maintext">
+                            <Input type="textarea" id="secretinput" style={{height:200,maxHeight:400,minHeight:100}} value={secret}
+                                onChange={(evt) => { changeSecret(evt) }} />
                             <div  >
-                            {!!guid && <a data-testid="res" href={`http://localhost:3000/secret/${guid}`}>http://localhost:3000/secret/{guid}</a>}
+                                {!!guid && <a data-testid="res" href={`http://localhost:3000/secret/${guid}`}>http://localhost:3000/secret/{guid}</a>}
                             </div>
-                        
-                        <Button style={{ margin: 20 }} 
-                        onClick={() => { postSecret() }}
-                        disabled={secret===''}
+                        </div>
+                        <Button 
+                            onClick={() => { postSecret() }}
+                            disabled={secret === ''}
+                            className="float-right"
                         >
                             Submit Secret
                             </Button>
