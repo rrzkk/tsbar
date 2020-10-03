@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/src/index.js",
   "scripts": {
-    "build": "tsc",
+   
+    "build": "tsc ",
     "prestart": "npm run build",
     "start": "nodemon .",
     "test": "jest --forceExit"

@@ -24,19 +24,25 @@ exports.default = {
     // get the json object with guid===guid
     jsonread(guid) {
         return __awaiter(this, void 0, void 0, function* () {
-            const rawdata = fs_1.default.readFileSync(path_1.default.join(__dirname, 'guiddata.json')).toString();
-            const jsondata = JSON.parse(rawdata);
+            const jsondata = this.jsonreadall();
             const result = jsondata.filter((el) => el.guid === guid);
             if (result.length !== 0) {
                 return result[0].secret.toString();
             }
             else
-                return '{}';
+                return 'The secret is already burnt!';
         });
     },
     // get the json array
     jsonreadall() {
-        const rawdata = fs_1.default.readFileSync(path_1.default.join(__dirname, 'guiddata.json')).toString();
+        let rawdata;
+        if (fs_1.default.existsSync(path_1.default.join(__dirname, 'guiddata.json'))) {
+            rawdata = fs_1.default.readFileSync(path_1.default.join(__dirname, 'guiddata.json')).toString();
+        }
+        else {
+            fs_1.default.writeFileSync(path_1.default.join(__dirname, 'guiddata.json'), '[]');
+            rawdata = '[]';
+        }
         const jsondata = JSON.parse(rawdata);
         return jsondata;
     },

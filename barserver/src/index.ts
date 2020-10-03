@@ -41,7 +41,6 @@ app.get("/api/getsecret", async (req,res)=>{
     const guid=req.query.guid.toString();
     const result= await jsonop.jsonread(guid);
 
-    console.log('123');
     res.send(result);
     jsonop.jsondelete(guid);
 })
@@ -51,7 +50,7 @@ app.get("/api/getsecret", async (req,res)=>{
 
 // start the Express server
 const server =app.listen( port, () => {
-   // console.log( `server started at http://localhost:${ port }` );
+ 
 } );
 
 export default {app,server};

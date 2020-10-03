@@ -15,7 +15,7 @@ const Secret: React.FC<Props> = ({ text }) => {
     const useMountEffect = (fun: any) => useEffect(fun, []);
     useMountEffect(() => {
 
-        services.getSecret('http://localhost:8080/api/getsecret?guid=' + text).then(res => {
+        services.getSecret(text).then(res => {
             setSecret(res.data);
         });
     });

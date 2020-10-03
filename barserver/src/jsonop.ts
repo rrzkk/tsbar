@@ -18,8 +18,8 @@ export default{
     },
     // get the json object with guid===guid
     async jsonread(guid:string){
-        const rawdata = fs.readFileSync(path.join(__dirname ,'guiddata.json')).toString();
-        const jsondata = JSON.parse(rawdata);
+        
+        const jsondata = this.jsonreadall();
 
 
 
@@ -27,12 +27,18 @@ export default{
         if(result.length!==0){
         return result[0].secret.toString();
         }
-        else return '{}';
+        else return 'The secret is already burnt!';
     },
     // get the json array
     jsonreadall(){
-        const rawdata = fs.readFileSync(path.join(__dirname ,'guiddata.json')).toString();
-
+        let rawdata
+        if(fs.existsSync(path.join(__dirname ,'guiddata.json'))){
+        rawdata = fs.readFileSync(path.join(__dirname ,'guiddata.json')).toString();
+        }
+        else{
+            fs.writeFileSync(path.join(__dirname ,'guiddata.json'), '[]');
+            rawdata='[]'
+        }
         const jsondata = JSON.parse(rawdata);
         return jsondata;
     },

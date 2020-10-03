@@ -30,23 +30,6 @@ it('should store secret', () => __awaiter(void 0, void 0, void 0, function* () {
     expect(res2.text).toBe("secrettext");
     const res3 = yield supertest_1.default(src_1.default.app)
         .get(`/api/getsecret?guid=${res.text}`);
-    expect(res3.text).toBe('{}');
+    expect(res3.text).toBe('The secret is already burnt!');
 }));
-/*
-it('should burn after read',async ()=>{
-    const res = await request(app.app)
-    .post('/api/trasfersecret2')
-    .send({data:"burnmsg"})
-    .set('Accept','application/json');
-
-    const res2 = await request(app.app)
-    .get(`/api/getsecret?guid=${res.body.guid}`);
-
-    expect(res2.text).toBe(res.body.secret);
-
-    const res3 = await request(app.app)
-    .get(`/api/getsecret?guid=${res.body.guid}`);
-
-    expect(res3.text).toBe('{}');
-})*/
 //# sourceMappingURL=foo.test.js.map

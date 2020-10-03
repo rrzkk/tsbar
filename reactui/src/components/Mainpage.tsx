@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, FormGroup, Label, Input } from 'reactstrap';
 import services from '../api/server';
+import url from '../baseurl'
 
-
+const frontendurl=url.Frontendurl;
 
 function Mainpage() {
     const [secret, setSecret] = useState<string>('');
@@ -46,7 +47,7 @@ function Mainpage() {
                             <Input type="textarea" id="secretinput" style={{height:200,maxHeight:400,minHeight:100}} value={secret}
                                 onChange={(evt) => { changeSecret(evt) }} />
                             <div  >
-                                {!!guid && <a data-testid="res" href={`http://localhost:3000/secret/${guid}`}>http://localhost:3000/secret/{guid}</a>}
+                                {!!guid && <a data-testid="res" href={`${frontendurl}secret/${guid}`}>{frontendurl}secret/{guid}</a>}
                             </div>
                         </div>
                         <Button 
