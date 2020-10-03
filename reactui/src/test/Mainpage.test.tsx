@@ -1,25 +1,27 @@
 import React from 'react';
-import { act, cleanup, fireEvent, getByText, render, waitForElement } from '@testing-library/react';
-import Mainpage from '../components/Mainpage';
+import { act, cleanup, fireEvent, getByTestId, getByText, render, waitForElement } from '@testing-library/react';
+
 
 import services from '../api/server';
 
-import * as mainpage from '../components/Mainpage';
+import main from '../components/Mainpage';
+import {Secret} from '../components/Secret';
+
 
 
 // const mockpush=jest.fn();
 // jest.mock('react-router-dom', () => ({
-  
+
 //   ...jest.requireActual('react-router-dom') as any,
 //   useHistory: () => ({
-    
+
 //     push:mockpush,
 //   })
 // }));
 
 
 it('test post method', () => {
-  const { getByText, getByLabelText } = render(<Mainpage />);
+  const { getByText, getByLabelText } = render(<main.Mainpage />);
 
   const button = getByText('Submit Secret');
   const inputBox = getByLabelText('Your Secret');
@@ -30,13 +32,13 @@ it('test post method', () => {
 );
 
 it('test post method', () => {
-  const { getByLabelText } = render(<Mainpage />);
+  const { getByLabelText } = render(<main.Mainpage />);
   expect((getByLabelText('Your Secret') as HTMLInputElement).value).toEqual('')
 }
 );
 
 it('test post method', () => {
-  const { getByText, getByLabelText } = render(<Mainpage />);
+  const { getByText, getByLabelText } = render(<main.Mainpage />);
 
   (getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
   expect((getByLabelText('Your Secret') as HTMLInputElement).value).toEqual('test')
@@ -46,7 +48,7 @@ it('test post method', () => {
 
 it('textbox receives text', () => {
   // arrange
-  const { getByLabelText } = render(<Mainpage />);
+  const { getByLabelText } = render(<main.Mainpage />);
   (getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
 
   // act
@@ -60,27 +62,27 @@ it('textbox receives text', () => {
 
 describe('should get secret', () => {
 
- 
+
   it('should get url', async () => {
     // arrange
-    const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
-   
-    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
+    const { getByText, getByLabelText, getByTestId } = render(<main.Mainpage />);
+
+    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async () => {
       return Promise.resolve({
-        headers:'Connection',
-        config:{},
+        headers: 'Connection',
+        config: {},
         status: 200,
         statusText: 'Ok',
-        data:'guid'
+        data: 'guid'
       });
     });
 
-    
+
     // act
     await act(async () => {
-      fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
+      fireEvent.change(getByLabelText('Your Secret'), { target: { value: 'test' } });
       //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
-     
+
     });
     await act(async () => {
       const button = getByText('Submit Secret');
@@ -93,39 +95,39 @@ describe('should get secret', () => {
     expect(getByTestId('res')).toHaveTextContent('http://localhost:3000/secret/guid');
   });
 
- it('should redirect',async()=>{
-    const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
+  it('should redirect', async () => {
+    const { getByText, getByLabelText, getByTestId } = render(<main.Mainpage />);
     const button = getByText('Submit Secret');
-   
-    
 
-    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
+
+
+    const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async () => {
       return Promise.resolve({
-        headers:'Connection',
-        config:{},
+        headers: 'Connection',
+        config: {},
         status: 200,
         statusText: 'Ok',
-        data:'guid'
+        data: 'guid'
       });
     });
-  
-    
-    await act(async () => {
-      fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
-      //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
-      
 
-      
+
+    await act(async () => {
+      fireEvent.change(getByLabelText('Your Secret'), { target: { value: 'test' } });
+      //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
+
+
+
     });
     await act(async () => {
-     
+
       fireEvent.click(button);
-      
+
     });
     await act(async () => {
-     
-      
-      const link=getByTestId('res');
+
+
+      const link = getByTestId('res');
       fireEvent.click(link);
 
     });
@@ -134,42 +136,42 @@ describe('should get secret', () => {
 
   })
 
- });
+});
 
 afterEach(cleanup);
-it("should validate textbox",async ()=>{
-  const { getByText, getByLabelText, getByTestId } = render(<Mainpage />);
+it("should validate textbox", async () => {
+  const { getByText, getByLabelText, getByTestId } = render(<main.Mainpage />);
   const button = getByText('Submit Secret');
   await act(async () => {
     fireEvent.click(button);
   });
-  const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async ()=>{
+  const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(async () => {
     return Promise.resolve({
-      headers:'Connection',
-      config:{},
+      headers: 'Connection',
+      config: {},
       status: 200,
       statusText: 'Ok',
-      data:'guid'
+      data: 'guid'
     });
   });
-  expect(postSecret).toHaveBeenCalledTimes(1); 
+  expect(postSecret).toHaveBeenCalledTimes(1);
   postSecret.mockClear();
 
 })
 
-it('server not up err test', async ()=>{
-  const { getByText,getByLabelText } = render(<Mainpage />);
+it('post server not up err test', async () => {
+  const { getByText, getByLabelText,getByTestId } = render(<main.Mainpage />);
   const button = getByText('Submit Secret');
-  const alert=jest.spyOn(window, 'alert').mockImplementation(() => {});
-  const testMock=jest.spyOn(mainpage,'testMock').mockImplementation(() => {});
-  const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(()=>{
+  //const alert = jest.spyOn(window, 'alert').mockImplementation(() => { });
+  //const testMock = jest.spyOn(main, 'testMock').mockImplementation(() => { });
+  const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(() => {
     throw new Error('no response');
-   });
+  });
 
-     
+
   await act(async () => {
-    fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
-    //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
+    fireEvent.change(getByLabelText('Your Secret'), { target: { value: 'test' } });
+
 
   });
 
@@ -177,19 +179,79 @@ it('server not up err test', async ()=>{
     fireEvent.click(button);
   });
 
-  
-  expect( postSecret).toBeCalledTimes(1);
-  expect(testMock).toBeCalledTimes(1);
-  expect(alert).toBeCalledTimes(1);
-  expect( alert).toBeCalledWith('no response');
+  expect(postSecret).toBeCalledTimes(1); 
+  // expect(alert).toBeCalledTimes(1);
+  // expect(alert).toBeCalledWith('Your Error Type is : Connection Error/nYour Error is : no response');
   postSecret.mockClear();
+ // alert.mockClear();
+ const err=getByTestId('err');
+ expect(err.textContent).toBe('Something seems wrong...')
+ 
+
 })
 
-// Timeout
+it('should handle other post error', async () => {
+  const { getByText, getByLabelText,getByTestId } = render(<main.Mainpage />);
+  const button = getByText('Submit Secret');
+  // const alert = jest.spyOn(window, 'alert').mockImplementation(() => { });
+ // const testMock = jest.spyOn(main, 'testMock').mockImplementation(() => { });
 
-// Interruption
+  //act
+  const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(() => {
+    return Promise.resolve({
+      headers: 'Connection',
+      config: {},
+      status: 418,
+      statusText: 'I\'m a teapot',
+      data:''
+    });
+  });
 
-// API cannot persist the material
+  await act(async () => {
+    fireEvent.change(getByLabelText('Your Secret'), { target: { value: 'test' } });
+  });
+
+  await act(async () => {
+    fireEvent.click(button);
+  });
+  expect(postSecret).toBeCalledTimes(1);
+ // expect(testMock).toBeCalledTimes(1);
+  // expect(alert).toBeCalledTimes(1);
+  // expect(alert).toBeCalledWith('Your Error Type is : Connection Error/nYour Error is : I\'m a teapot');
+  postSecret.mockClear();
+  const err=getByTestId('err');
+  expect(err.textContent).toBe('Something seems wrong...')
+  // alert.mockClear();
+ // testMock.mockClear();
+})
+
+it('should handle all get error', async () => {
+ 
+
+
+
+  //act
+  const getSecret = jest.spyOn(services, 'getSecret').mockImplementation(() => {
+    return Promise.resolve({
+      headers: 'Connection',
+      config: {},
+      status: 418,
+      statusText: 'I\'m a teapot',
+      data:''
+    });
+  });
+
+  await act(async ()=>{ render(<Secret text=''/>)});
+
+
+
+  expect(getSecret).toBeCalledTimes(1);
+
+  getSecret.mockClear();
+
+  expect('Something seems wrong...').toBeInTheDocument();
+
+})
 
 
 

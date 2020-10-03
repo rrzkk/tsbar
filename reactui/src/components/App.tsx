@@ -9,7 +9,7 @@ import {
     RouteComponentProps
 } from "react-router-dom"
 import { Secret } from './Secret';
-import Mainpage from './Mainpage'
+import main from './Mainpage'
 
 
 
@@ -25,7 +25,7 @@ function App() {
         <div className="bg">
         <Router >
             <Switch>
-                <Route exact path="/" component={Mainpage} />
+                <Route exact path="/" component={main.Mainpage} />
                 <Route path="/secret/:secret" >
                  {renderSecret}
                 </Route>
