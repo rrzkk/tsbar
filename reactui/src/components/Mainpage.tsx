@@ -6,13 +6,16 @@ import url from '../baseurl'
 
 const frontendurl=url.Frontendurl;
 
+export function testMock(){
+
+}
+
 function Mainpage() {
     const [secret, setSecret] = useState<string>('');
     const [guid, setGuid] = useState<string>('');
 
 
   
-
 
     function changeSecret(evt: React.ChangeEvent<HTMLInputElement>) {
         setSecret(evt.target.value);
@@ -30,6 +33,8 @@ function Mainpage() {
             }
         } catch (error) {
             console.log('Post secret fail: ', error.message);
+            testMock();
+            alert(error.message);
         }
     }
 

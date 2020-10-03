@@ -1,10 +1,11 @@
 import React from 'react';
 import { act, cleanup, fireEvent, getByText, render, waitForElement } from '@testing-library/react';
 import Mainpage from '../components/Mainpage';
-import {Secret} from '../components/Secret'
+
 import services from '../api/server';
-import { useHistory } from "react-router-dom";
-import * as ReactRouterDom from 'react-router-dom';
+
+import * as mainpage from '../components/Mainpage';
+
 
 // const mockpush=jest.fn();
 // jest.mock('react-router-dom', () => ({
@@ -154,6 +155,34 @@ it("should validate textbox",async ()=>{
   expect(postSecret).toHaveBeenCalledTimes(1); 
   postSecret.mockClear();
 
+})
+
+it('server not up err test', async ()=>{
+  const { getByText,getByLabelText } = render(<Mainpage />);
+  const button = getByText('Submit Secret');
+  const alert=jest.spyOn(window, 'alert').mockImplementation(() => {});
+  const testMock=jest.spyOn(mainpage,'testMock').mockImplementation(() => {});
+  const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(()=>{
+    throw new Error('no response');
+   });
+
+     
+  await act(async () => {
+    fireEvent.change(getByLabelText('Your Secret'),{target:{value:'test'}});
+    //(getByLabelText('Your Secret') as HTMLInputElement).value = 'test';
+
+  });
+
+  await act(async () => {
+    fireEvent.click(button);
+  });
+
+  
+  expect( postSecret).toBeCalledTimes(1);
+  expect(testMock).toBeCalledTimes(1);
+  expect(alert).toBeCalledTimes(1);
+  expect( alert).toBeCalledWith('no response');
+  postSecret.mockClear();
 })
 
 // Timeout

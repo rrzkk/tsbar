@@ -50,7 +50,6 @@ app.get("/api/getsecret", (req, res) => __awaiter(void 0, void 0, void 0, functi
 }));
 // start the Express server
 const server = app.listen(port, () => {
-    // console.log( `server started at http://localhost:${ port }` );
 });
 exports.default = { app, server };
 //# sourceMappingURL=index.js.map
