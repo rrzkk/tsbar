@@ -27,11 +27,11 @@
     "reactstrap": "^8.6.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "devstart": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "expressstart": "npm run build && node ."
+    "start": "npm run build && serve -s build -l 80"
   },
   "eslintConfig": {
     "extends": "react-app"

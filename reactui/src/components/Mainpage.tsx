@@ -6,9 +6,8 @@ import url from '../baseurl'
 
 const frontendurl = url.Frontendurl;
 
-function testMock(code: number, setType:any,setModal:any) {
-    
-    let type: string;
+function testMock(code: number, setType: any, setModal: any) {
+
     if (code === 0) { setType('Connection Error') }
     else if (code > 399 && code < 500) { setType('Client side Error') }
     else if (code > 499 && code < 600) { setType('Server side Error') }
@@ -23,9 +22,9 @@ function Mainpage() {
     const [guid, setGuid] = useState<string>('');
     const [connectionErr, setConnectionErr] = useState<number>(0);
     //err type
-    const [type,setType]=useState<string>('');
+    const [type, setType] = useState<string>('');
     const [modal, setModal] = useState(false);
-    const [err,setErr]= useState('');
+    const [err, setErr] = useState('');
 
 
 
@@ -46,9 +45,9 @@ function Mainpage() {
                 throw error;
             }
         } catch (error) {
-            console.log('Post secret fail: ', error.message);
+
             setErr(error.message);
-            main.testMock(connectionErr, setType,setModal);
+            main.testMock(connectionErr, setType, setModal);
 
         }
     }

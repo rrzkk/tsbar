@@ -5,7 +5,10 @@ import { act, cleanup, fireEvent, getByTestId, getByText, render, waitForElement
 import services from '../api/server';
 
 import main from '../components/Mainpage';
-import {Secret} from '../components/Secret';
+import { Secret } from '../components/Secret';
+import { callbackify } from 'util';
+import { resolve } from 'path';
+import { rejects } from 'assert';
 
 
 
@@ -160,7 +163,7 @@ it("should validate textbox", async () => {
 })
 
 it('post server not up err test', async () => {
-  const { getByText, getByLabelText,getByTestId } = render(<main.Mainpage />);
+  const { getByText, getByLabelText, getByTestId } = render(<main.Mainpage />);
   const button = getByText('Submit Secret');
   //const alert = jest.spyOn(window, 'alert').mockImplementation(() => { });
   //const testMock = jest.spyOn(main, 'testMock').mockImplementation(() => { });
@@ -179,22 +182,22 @@ it('post server not up err test', async () => {
     fireEvent.click(button);
   });
 
-  expect(postSecret).toBeCalledTimes(1); 
+  expect(postSecret).toBeCalledTimes(1);
   // expect(alert).toBeCalledTimes(1);
   // expect(alert).toBeCalledWith('Your Error Type is : Connection Error/nYour Error is : no response');
   postSecret.mockClear();
- // alert.mockClear();
- const err=getByTestId('err');
- expect(err.textContent).toBe('Something seems wrong...')
- 
+  // alert.mockClear();
+  const err = getByTestId('err');
+  expect(err.textContent).toBe('Something seems wrong...')
+
 
 })
 
 it('should handle other post error', async () => {
-  const { getByText, getByLabelText,getByTestId } = render(<main.Mainpage />);
+  const { getByText, getByLabelText, getByTestId } = render(<main.Mainpage />);
   const button = getByText('Submit Secret');
   // const alert = jest.spyOn(window, 'alert').mockImplementation(() => { });
- // const testMock = jest.spyOn(main, 'testMock').mockImplementation(() => { });
+  // const testMock = jest.spyOn(main, 'testMock').mockImplementation(() => { });
 
   //act
   const postSecret = jest.spyOn(services, 'postSecret').mockImplementation(() => {
@@ -203,7 +206,7 @@ it('should handle other post error', async () => {
       config: {},
       status: 418,
       statusText: 'I\'m a teapot',
-      data:''
+      data: ''
     });
   });
 
@@ -215,43 +218,88 @@ it('should handle other post error', async () => {
     fireEvent.click(button);
   });
   expect(postSecret).toBeCalledTimes(1);
- // expect(testMock).toBeCalledTimes(1);
+  // expect(testMock).toBeCalledTimes(1);
   // expect(alert).toBeCalledTimes(1);
   // expect(alert).toBeCalledWith('Your Error Type is : Connection Error/nYour Error is : I\'m a teapot');
   postSecret.mockClear();
-  const err=getByTestId('err');
+  const err = getByTestId('err');
   expect(err.textContent).toBe('Something seems wrong...')
   // alert.mockClear();
- // testMock.mockClear();
+  // testMock.mockClear();
 })
 
 it('should handle all get error', async () => {
- 
+
 
 
 
   //act
-  const getSecret = jest.spyOn(services, 'getSecret').mockImplementation(() => {
+  const getSecret = jest.spyOn(services, 'getSecret').mockImplementation(async () => {
     return Promise.resolve({
       headers: 'Connection',
       config: {},
       status: 418,
       statusText: 'I\'m a teapot',
-      data:''
+      data: ''
     });
   });
 
-  await act(async ()=>{ render(<Secret text=''/>)});
+
+  //   await act(async()=>{ const { getByTestId } = render(<Secret text='' />);
+
+  //   setTimeout(()=>{
+  //     const err=getByTestId('err');
+  //     expect(getSecret).toBeCalledTimes(1);
+  //     expect(err.textContent).toBe('Something seems wrong...');
+  //   },0)
+  // });
 
 
+  // function test(callback: any) {
+  //     act(()=>{const { getByTestId } = render(<Secret text='' />);
+  //     callback(getByTestId);
+  //   })
 
-  expect(getSecret).toBeCalledTimes(1);
+  //   }
+  //   function getContent(getByTestId: any,callback:any) {
+  //     const err =getByTestId('err');
+  //     expect(err.textContent).toBe('Something seems wrong...');
+  //   }
 
-  getSecret.mockClear();
+  //   test((getByTestId:any)=>{
+  //     getContent(getByTestId,()=>{
 
-  expect('Something seems wrong...').toBeInTheDocument();
+  //     });
+  //   });
 
-})
+  
+  // function test() {
+  //   return new Promise((resolve, rejects) => {
+  //     act(() => {
+  //       const { getByTestId } = render(<Secret text='' />);
+  //       resolve(getByTestId);
+  //     })
+  //   })
+  // }
+
+  // function getContent(getByTestId: any) {
+  //   const err = getByTestId('err');
+  //   expect(err.textContent).toBe('Something seems wrong...');
+  // }
+
+  // test().then((getByTestId:any) => {
+  //       getContent(getByTestId);
+  // })
+
+
+    const { getByTestId } = render(<Secret text='' />);
+    const err = await waitForElement(()=> getByTestId('err'))
+
+    expect(getSecret).toBeCalledTimes(1);
+    expect(err.textContent).toBe('Something seems wrong...');
+
+    getSecret.mockClear();
+  })
 
 
 

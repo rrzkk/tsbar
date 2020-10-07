@@ -3,10 +3,13 @@ import axios, { AxiosResponse} from 'axios';
 //    id:string
 //}
 import url from '../baseurl';
-const backendurl=url.Backendurl;
+import config from '../configuration.json'
+const backendurl=process.env.NODE_ENV==='production'?config.exUrlProd:config.exUrlDev;
+const frontendurl=process.env.NODE_ENV==='production'?config.intUrlProd:config.intUrlDev;
 
 export default { 
     postSecret(secret: string): Promise<AxiosResponse<string>> {
+      
     
         return axios.request({
             
