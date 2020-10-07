@@ -8,6 +8,7 @@
     "build": "tsc ",
     "prestart": "npm run build",
     "start": "nodemon .",
+    "devstart":"nodemon start",
     "test": "jest --forceExit"
   },
   "keywords": [],
