@@ -4,7 +4,9 @@ import { Button, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFo
 import services from '../api/server';
 import url from '../baseurl'
 
-const frontendurl = url.Frontendurl;
+//const frontendurl = url.Frontendurl;
+import config from '../configuration.json'
+const frontendurl=process.env.NODE_ENV==='production'?config.intUrlProd:config.intUrlDev;
 
 function testMock(code: number, setType: any, setModal: any) {
 

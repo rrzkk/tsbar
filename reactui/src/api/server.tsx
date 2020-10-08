@@ -5,7 +5,7 @@ import axios, { AxiosResponse} from 'axios';
 import url from '../baseurl';
 import config from '../configuration.json'
 const backendurl=process.env.NODE_ENV==='production'?config.exUrlProd:config.exUrlDev;
-const frontendurl=process.env.NODE_ENV==='production'?config.intUrlProd:config.intUrlDev;
+//const frontendurl=process.env.NODE_ENV==='production'?config.intUrlProd:config.intUrlDev;
 
 export default { 
     postSecret(secret: string): Promise<AxiosResponse<string>> {
