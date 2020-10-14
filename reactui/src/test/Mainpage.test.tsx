@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, cleanup, fireEvent, getByTestId, getByText, render, waitForElement } from '@testing-library/react';
+import { act, cleanup, fireEvent, getByTestId, render, waitForElement } from '@testing-library/react';
 
 
 import services from '../api/server';
@@ -271,7 +271,7 @@ it('should handle all get error', async () => {
 
   //     });
   //   });
-
+  //Promise.resolve().then(render(<Secret text=''></Secret>)).then(({getByTestId}:any)=>{expect(getByTestId('err')).toBe('Something seems wrong...')});
   
   // function test() {
   //   return new Promise((resolve, rejects) => {

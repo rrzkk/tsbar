@@ -6,8 +6,8 @@ import url from '../baseurl'
 
 //const frontendurl = url.Frontendurl;
 import config from '../configuration.json'
-const frontendurl=process.env.NODE_ENV==='production'?config.intUrlProd:config.intUrlDev;
-
+//const frontendurl=process.env.NODE_ENV==='production'?config.intUrlProd:config.intUrlDev;
+const frontendurl='http://'+window.location.host+':80/';
 function testMock(code: number, setType: any, setModal: any) {
 
     if (code === 0) { setType('Connection Error') }

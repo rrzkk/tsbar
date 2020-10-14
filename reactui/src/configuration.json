@@ -1,6 +1,4 @@
 {
-    "exUrlProd":"http://localhost:8080/",
-    "exUrlDev" :"http://localhost:8080/",
-    "intUrlProd":"http://localhost:80/",
-    "intUrlDev":"http://localhost:3000/"
+    "exUrlProd":"http://13.236.161.187:8080/",
+    "exUrlDev" :"http://localhost:8080/"
 }
