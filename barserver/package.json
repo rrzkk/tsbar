@@ -8,7 +8,6 @@
     "build": "npm run wp",
     "prestart": "npm run wp",
     "start": "node dist/index.js",
-    
     "test": "jest --forceExit",
     "devstart": "webpack --config webpack.dev.js && node dist/index.js"
   },
@@ -18,10 +17,12 @@
   "dependencies": {
     "@types/cors": "^2.8.7",
     "@types/nodemon": "^1.19.0",
+    "@types/pg": "^7.14.5",
     "axios": "^0.20.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pg": "^8.4.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.8",

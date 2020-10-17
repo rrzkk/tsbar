@@ -15,7 +15,7 @@ export default {
         return axios.request({
             
             
-            url: backendurl+'api/trasfersecret2', 
+            url: backendurl+'api/psgl/postsecret', 
             method: "POST",
             data: { data: JSON.stringify(secret) },
             headers: {
@@ -26,7 +26,7 @@ export default {
     getSecret(url:string):Promise<AxiosResponse<string>>{
         return axios.request(
             {
-                url:backendurl+'api/getsecret?guid='+url,
+                url:backendurl+'api/psgl/getsecret?guid='+url,
                 method:"GET",
             }
         )

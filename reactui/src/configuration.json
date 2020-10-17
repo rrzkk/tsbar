@@ -1,4 +1,4 @@
 {
-    "exUrlProd":"http://13.236.161.187:8080/",
+    "exUrlProd":"https://api.zhekunren.com:8081/",
     "exUrlDev" :"http://localhost:8080/"
 }
