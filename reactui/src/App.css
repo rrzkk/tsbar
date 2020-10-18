@@ -17,7 +17,7 @@ html, body {
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
-  align-items: center;
+
   justify-items: center;
 }
 .maintext{
@@ -35,7 +35,6 @@ html, body {
 .center{
   padding: 30px;
   background-color:rgba(255,255,254,0.7);
-  border-radius: 25px;
 }
 .bottom{
   position: absolute;
@@ -43,6 +42,5 @@ html, body {
   left: 50%;                   /* center link horizontally */
   transform: translateX(-50%);
   color: white;
-
 }
 

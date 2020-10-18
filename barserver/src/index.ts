@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import guid from './guid';
 import jsonop from './jsonop';
 import cors from 'cors';
-import {Pool, Client} from 'pg';
+import {Pool} from 'pg';
 
 
 const app = express();
@@ -57,7 +57,7 @@ app.get("/api/psgl/getsecret",(req,res)=>{
     const guid=req.query.guid.toString();
     pool.query('SELECT * FROM secrets WHERE guids=$1',[guid],(err,resp)=>{
         if(resp.rows.length!==0){
-        res.send(resp.rows[0].secrets+resp.rows.length);
+        res.send(resp.rows[0].secrets);
         pool.query('DELETE FROM secrets WHERE guids = $1', [guid], (error, results) => {
             if (error) {
               throw error

@@ -8,8 +8,8 @@ import services from '../api/server';
 interface Props {
     text: string
 }
-function testMock(code: number, setType:any,setModal:any) {
-    
+function testMock(code: number, setType: any, setModal: any) {
+
     if (code === 0) { setType('Connection Error') }
     else if (code > 399 && code < 500) { setType('Client side Error') }
     else if (code > 499 && code < 600) { setType('Server side Error') }
@@ -39,19 +39,38 @@ const Secret: React.FC<Props> = ({ text }) => {
                 //setConnectionErr(res.status);
                 console.log(res.status);
                 setConnectionErr(res.status);
-              
+
                 throw error;
             }
 
         }).catch(
             error => {
                 setErr(error.message);
-                testMock(connectionErr, setType,setModal);
+                testMock(connectionErr, setType, setModal);
             }
         );
     });
+    //responsive design
+    const [width, setWidth] = React.useState(window.innerWidth);
+    const updateWidthAndHeight = () => {
+        setWidth(window.innerWidth);
+    };
+    React.useEffect(() => {
+        window.addEventListener("resize", updateWidthAndHeight);
+        return () => window.removeEventListener("resize", updateWidthAndHeight);
+    });
+    const resStyle = {
+        borderRadius: '25px',
+        alignSelf: 'center'
+    }
+    const resStyle2 = {
+        borderRadius: '0px',
+        alignSelf: 'flex-start',
+        height:'80vh',
+        paddingTop:'20vh'
+    }
     return (
-        <div className='container center'>
+        <div className='container center' style={width>575?resStyle:resStyle2}>
             <div className='row'>
                 <div className='col-10 offset-1'>
                     <div className="headertext">
