@@ -23,11 +23,8 @@ html, body {
 .maintext{
   padding: 1px;
   margin: 20px;
-  align-self: "center";
-  display: flex;
-  align-items: center;
-  align-content: center;
-  width: fit-content;
+  text-align: center;
+ 
 }
 .headertext{
   margin: 20px;

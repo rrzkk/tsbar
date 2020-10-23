@@ -82,8 +82,8 @@ const Secret: React.FC<Props> = ({ text }) => {
                     </div>
 
                     <div className="maintext" >
-                        <div style={{ whiteSpace: "pre",width:"fit-content"}}><b>Secret: </b><br />
-                            <div style={{ }}>{secret}</div>
+                        <div style={{ whiteSpace: "pre",textAlign:"start"}}><b>Secret: </b><br />
+                            <div >{secret}</div>
                         </div>
                     </div>
                 </div>
