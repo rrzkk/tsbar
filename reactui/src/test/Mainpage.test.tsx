@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { act, cleanup, fireEvent, getByTestId, render, waitForElement } from '@testing-library/react';
 
 
@@ -215,6 +216,15 @@ it('should handle all get error', async () => {
     copyURL.mockClear();
   })
 
+  it('should be markdown',async ()=>{
+    const {getByTestId}= render (<main.Mainpage/>);
+    await act(async()=>{
+      fireEvent.change(getByTestId('mdinput'),{target:{value:`this is
+      a markdown`}});
+    });
+    expect(getByTestId('mdinput').textContent).not.toBe('this is a markdown');
+    
+  })
 
 
 

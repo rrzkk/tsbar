@@ -66,13 +66,13 @@ const Secret: React.FC<Props> = ({ text }) => {
     const resStyle2 = {
         borderRadius: '0px',
         alignSelf: 'flex-start',
-        height:'80vh',
-        paddingTop:'20vh'
+        height: '80vh',
+        paddingTop: '20vh'
     }
     return (
-        <div className='container center' style={width>575?resStyle:resStyle2}>
+        <div className='container center' style={width > 575 ? resStyle : resStyle2}>
             <div className='row'>
-                <div className='col-10 offset-1'>
+                <div className='col-10 offset-1' style={{alignContent:"center"}}>
                     <div className="headertext">
                         <h3>The secret message</h3>
                     </div>
@@ -81,8 +81,10 @@ const Secret: React.FC<Props> = ({ text }) => {
                         <div><b>GUID : </b>{text}</div>
                     </div>
 
-                    <div className="maintext">
-                        <div><b>Secret: </b>{secret}</div>
+                    <div className="maintext" >
+                        <div style={{ whiteSpace: "pre",width:"fit-content"}}><b>Secret: </b><br />
+                            <div style={{ }}>{secret}</div>
+                        </div>
                     </div>
                 </div>
                 <Modal toggle={() => { setModal(false) }} isOpen={modal}>

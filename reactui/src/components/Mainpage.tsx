@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import services from '../api/server';
 
+
+
+
 //const frontendurl=process.env.NODE_ENV==='production'?config.intUrlProd:config.intUrlDev;
 const frontendurl = 'http://' + window.location.host + '/';
 function testMock(code: number, setType: any, setModal: any) {
@@ -29,10 +32,15 @@ function Mainpage() {
     const [type, setType] = useState<string>('');
     const [modal, setModal] = useState(false);
     const [err, setErr] = useState('');
+  
+   
+
 
     function changeSecret(evt: React.ChangeEvent<HTMLInputElement>) {
         setSecret(evt.target.value);
+     
     }
+ 
     async function postSecret() {
         try {
             const response = await services.postSecret(secret);
@@ -84,6 +92,8 @@ function Mainpage() {
                         <div className="maintext">
                             <Input type="textarea" id="secretinput" style={{ height: 200, maxHeight: 400, minHeight: 100 }} value={secret}
                                 onChange={(evt) => { changeSecret(evt) }} />
+                           
+                         
                             {
                                 !!guid &&
                                 <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
