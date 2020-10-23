@@ -70,9 +70,9 @@ const Secret: React.FC<Props> = ({ text }) => {
         paddingTop: '20vh'
     }
     return (
-        <div className='container center' style={width > 575 ? resStyle : resStyle2}>
-            <div className='row'>
-                <div className='col-10 offset-1' style={{alignContent:"center"}}>
+        <div className='container center ' style={width > 575 ? resStyle : resStyle2}>
+            <div className='row '>
+                <div className='col-10 offset-1' >
                     <div className="headertext">
                         <h3>The secret message</h3>
                     </div>
@@ -81,9 +81,9 @@ const Secret: React.FC<Props> = ({ text }) => {
                         <div><b>GUID : </b>{text}</div>
                     </div>
 
-                    <div className="maintext" >
-                        <div style={{ whiteSpace: "pre",textAlign:"start"}}><b>Secret: </b><br />
-                            <div >{secret}</div>
+                    <div className="maintext" style={{justifyContent:"center",display:"flex"}}>
+                        <div style={{ whiteSpace: "pre",width:"fit-content"}}><b>Secret: </b><br />
+                            <div style={{textAlign:"initial"}}>{secret}</div>
                         </div>
                     </div>
                 </div>

@@ -11,8 +11,8 @@ app.use(bodyParser.json());
 const port = 8080; // default port to listen
 const pool=new Pool({
     user:'postgres',
-    host:'54.252.209.243',
-    database:'postgres',
+    host:'13.210.249.135',
+    database:'postgresql',
     password:'zhekun',
     port:5432
 });
