@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import services from '../api/server';
+import { useForm } from "react-hook-form";
 
 
 
@@ -18,7 +19,7 @@ function testMock(code: number, setType: any, setModal: any) {
     setModal(true);
 
 }
-function copyURL(value:any) {
+function copyURL(value: any) {
     navigator.clipboard.writeText(value)
 }
 
@@ -32,15 +33,18 @@ function Mainpage() {
     const [type, setType] = useState<string>('');
     const [modal, setModal] = useState(false);
     const [err, setErr] = useState('');
-  
-   
+    const { register, errors } = useForm(
+        { mode: 'onChange' }
+    );
+
+
 
 
     function changeSecret(evt: React.ChangeEvent<HTMLInputElement>) {
         setSecret(evt.target.value);
-     
+
     }
- 
+
     async function postSecret() {
         try {
             const response = await services.postSecret(secret);
@@ -77,8 +81,8 @@ function Mainpage() {
         borderRadius: '0px',
         alignSelf: 'flex-start'
     }
-    const urlRef = useRef<null|any>(null);
-   
+    const urlRef = useRef<null | any>(null);
+
 
     return (
 
@@ -91,30 +95,52 @@ function Mainpage() {
                         </div>
                         <div className="maintext">
                             <Input type="textarea" id="secretinput" style={{ height: 200, maxHeight: 400, minHeight: 100 }} value={secret}
-                                onChange={(evt) => { changeSecret(evt) }} />
-                           
-                         
+                                onChange={(evt) => { changeSecret(evt) }} name="secret" />
+
+
                             {
                                 !!guid &&
                                 <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
                                     <Label for="url"><b>URL:</b></Label>
                                     <Input type="text" readOnly id="url" style={{ marginLeft: "20px" }} value={`${frontendurl}secret/${guid}`} ref={urlRef} />
-                                  
-                                        <Button style={{ marginLeft: "20px" }} onClick={() => { main.copyURL(urlRef.current.props.value) }} color="primary"
+
+                                    <Button style={{ marginLeft: "20px" }} onClick={() => { main.copyURL(urlRef.current.props.value) }} color="primary"
                                         data-testid="copyBtn">COPY</Button>
-                                    
+
                                 </div>
                             }
 
                         </div>
-                        <Button
-                            onClick={() => { postSecret() }}
-                            disabled={secret === ''}
-                            className="float-right"
-                            style={{ margin: 20 }}
-                        >
-                            Submit Secret
-                            </Button>
+                        <div style={width > 575 ?{ display: "flex", flexDirection: "row" }:{ display: "flex",flexWrap:"wrap",alignItems:"center"}}>
+                            <Label style={{ marginTop: 20, marginLeft: 20 }}><b>Email:</b></Label>
+
+
+                            <input type="text"
+                                name="email"
+                                data-testid="email_input"
+                                style={{ margin: 20, border: "none", borderRadius: "3%",width:"100%" ,minWidth:"100px"}}
+                                ref={register(
+                                    {
+                                        required: 'You need an email to send secret',
+                                        pattern: { value: /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z-]+(?:\.[a-zA-Z0-]+)*$/, message: 'Invalid Email Format' }
+                                    }) as any}
+                            />
+
+                          
+                            <Button
+                                onClick={() => { postSecret() }}
+                                disabled={secret === ''}
+                                style={width > 575 ?{
+                                    marginTop: 20,marginRight:20, marginBottom:20,minWidth: 150
+                                }:{
+                                    marginTop: 5,marginRight:20, marginBottom:20,marginLeft:20,minWidth: 150
+                                }}
+                            >
+                                Submit Secret
+                        </Button>
+                        </div>
+                        {errors.email?.type === "required" && <p style={{color:"red",marginLeft:85,fontSize:13}}>You need an email to send secret</p>}
+                        {errors.email?.type === "pattern" && <p data-testid="email_validation" style={{color:"red",marginLeft:85,fontSize:13}}>*Invalid Email Format</p>}
                     </FormGroup>
 
                     <Modal toggle={() => { setModal(false) }} isOpen={modal}>
@@ -136,6 +162,6 @@ function Mainpage() {
 
     );
 }
-const main = { Mainpage, testMock,copyURL }
+const main = { Mainpage, testMock, copyURL }
 
 export default main;
