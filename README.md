@@ -3,6 +3,9 @@ This is a website used for trasferring secret developed by Zhekun(Vincent) Ren a
 This project is tested by Jest and Postman, deployed using Docker, shell and AWS(ECS Fargate)
 Whole service is deployed on AWS(database, backend and frontend)
 
+The sender can text the message into the text box, and the website would store the encrypted message into the database and generate an URL for reciever to see the message
+The message would be burnt after read
+
 ## Project Demo
 There is no demo for this project now, because the certificate manager spending, this project has already handled to Lyra Education
 
