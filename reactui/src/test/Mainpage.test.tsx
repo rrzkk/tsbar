@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, cleanup, fireEvent, getByTestId, render, waitForElement } from '@testing-library/react';
+import { act, cleanup, fireEvent, getByTestId, render, waitFor } from '@testing-library/react';
 
 
 import services from '../api/server';
@@ -177,8 +177,8 @@ it('should handle all get error', async () => {
     });
   });
 
-    const { getByTestId } = render(<Secret text='' />);
-    const err = await waitForElement(()=> getByTestId('err'))
+    const { getByTestId,findByTestId } = render(<Secret text='' />);
+    const err = await findByTestId('err');
 
     expect(getSecret).toBeCalledTimes(1);
     expect(err.textContent).toBe('Something seems wrong...');
@@ -204,7 +204,7 @@ it('should handle all get error', async () => {
     await act(async () => {
       fireEvent.click(getByText('Submit Secret'));
     });
-    const copyBtn = await waitForElement(()=> getByTestId('copyBtn'));
+    const copyBtn = await waitFor(()=> getByTestId('copyBtn'));
      await act(async () => {
        fireEvent.click(copyBtn);
     });
@@ -216,15 +216,37 @@ it('should handle all get error', async () => {
     copyURL.mockClear();
   })
 
-  it('should be markdown',async ()=>{
-    const {getByTestId}= render (<main.Mainpage/>);
-    await act(async()=>{
-      fireEvent.change(getByTestId('mdinput'),{target:{value:`this is
-      a markdown`}});
-    });
-    expect(getByTestId('mdinput').textContent).not.toBe('this is a markdown');
-    
+  it('should be a email input box',async()=>{
+    const {  getByTestId } = render(<main.Mainpage />);
+    expect(getByTestId('email_input')).not.toBeUndefined;
   })
+
+  it('should filter 1@1.1',async ()=>{
+    const {  getByTestId,findByTestId } = render(<main.Mainpage />);
+    await act(async () => {
+      fireEvent.change(getByTestId('email_input'), { target: { value: '111' } });
+    });
+    const noticeText=await waitFor(()=>getByTestId('email_validation'));
+    expect(noticeText).toHaveTextContent('Invalid Email Format');
+  })
+  // it('should filter 1@1.c',async ()=>{
+  //   const {  getByTestId,findByTestId } = render(<main.Mainpage />);
+  //   await act(async () => {
+  //     fireEvent.change(getByTestId('email_input'), { target: { value: '1@1.c' } });
+  //   });
+  //   const noticeText=await findByTestId('email_validation');
+  //   expect(noticeText).toHaveTextContent('Invalid Email Format');
+  // })
+  // it('should filter 1.1@whatever.com',async ()=>{
+  //   const {  getByTestId,findByTestId } = render(<main.Mainpage />);
+  //   await act(async () => {
+  //     fireEvent.change(getByTestId('email_input'), { target: { value: '1.1@whatever.com' } });
+  //   });
+  //   const noticeText=await findByTestId('email_validation');
+  //   expect(noticeText).toHaveTextContent('Invalid Email Format');
+  // })
+
+
 
 
 
